@@ -7,6 +7,8 @@
 # and other relevant variables, such as whether or not
 # you'd like to cross post to statusnet, twitter, or farcebork
 
+filedate=$(date +%m%d%y%H%M%S)
+
 read -p "Please enter your username: " uname
 read -p "Please enter your password: " pwrd
 read -p "Cross post to statusnet? (1=yes, 0=no): " snet
@@ -19,7 +21,8 @@ read -p "Enter the domain of your Friendika site (i.e. http://friendika.somesite
 if [[ $(echo $*) ]]; then
 	ud="$*"
 else
-	read -p "Enter your update text: " ud
+	vim $filedate.fpost
+	ud=$(cat $filedate.fpost)
 fi
 
 # and this is the curl command that sends the update to the server
@@ -33,3 +36,4 @@ else
 	echo "Success!"
 	echo $ud
 fi
+mv $filedate.fpost ~/Documents/fposts/
