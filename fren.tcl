@@ -74,6 +74,7 @@ bind . <Control-q> {clear}
 bind . <F8> {prefs}
 bind . <F7> {browz}
 bind . <F5> {wordcount}
+bind . <Control-Return} postup
 
 tk_setPalette background #78b3d2 foreground #000000
 
@@ -187,18 +188,6 @@ pack .fluff.st -in .fluff -side right
 pack .fluff -in . -fill x
 
 
-#frame .lj1
-#grid [ttk::label .lj1.st -text "Cross post to StatusNet: "]\
-#[ttk::checkbutton .lj1.stx -state snet]\
-#[ttk::label .lj1.tw -text "Twitter: "]\
-#[ttk::checkbutton .lj1.twx -state twit]\
-#[ttk::label .lj1.fb -text "Facebook: "]\
-#[ttk::checkbutton .lj1.fbx -state fb]
-
-
-#pack .lj1 -in . -fill x
-
-
 # Here is the text widget
 ########################################TEXT WIDGET
 # amazingly simple, this part, considering the great power in this little widget...
@@ -222,7 +211,7 @@ set foco .txt.txt
 bind .txt.txt <FocusIn> {set foco .txt.txt}
 
 
-#  tweet/dent
+#  statusnet
 ###########################################
 frame .dt
 
