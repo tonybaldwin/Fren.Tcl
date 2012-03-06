@@ -35,7 +35,9 @@ global ps
 global dw
 global lj
 global wp
+global subject
 
+set subject "posted with fren.tcl"
 set sn 0
 set fb 0
 set twit 0
@@ -133,7 +135,6 @@ menu .fluff.ed.t -tearoff 1
 
 tk::button .fluff.help -text "Help" -command {help}
 tk::button .fluff.abt -text "About" -command {about}
-tk::button .fluff.post -text "Post" -command {postup}
 
 
 # inserts menu
@@ -162,6 +163,8 @@ menu .fluff.view.t -tearoff 1
     exec $::brow "$::surl" &
 }
 
+tk::label .fluff.tit -text " Subject or Title: "
+tk::entry .fluff.titi -textvariable subject
 
 # pack em in...
 ############################
@@ -173,9 +176,11 @@ pack .fluff.view -in .fluff -side left
 pack .fluff.font1 -in .fluff -side left
 pack .fluff.size -in .fluff -side left
 
+pack .fluff.tit -in .fluff -side left
+pack .fluff.titi -in .fluff -side left
+
 pack .fluff.help -in .fluff -side right
 pack .fluff.abt -in .fluff -side right
-pack .fluff.post -in .fluff -side right
 
 pack .fluff -in . -fill x
 
@@ -185,40 +190,42 @@ pack .fluff -in . -fill x
 frame .flu -bd 1 -relief raised
 
 tk::label .flu.lbl -text "Xpost to "
-tk::label .flu.st -text "Status: "
+tk::label .flu.st -text "Status "
 tk::checkbutton .flu.stx -variable sn
-tk::label .flu.tw -text "Tweet: "
+tk::label .flu.tw -text "Tweet "
 tk::checkbutton .flu.twx -variable twit
-tk::label .flu.fb -text "FB: "
+tk::label .flu.fb -text "FB "
 tk::checkbutton .flu.fbx -variable fb
-tk::label .flu.lj -text "LJ: "
+tk::label .flu.lj -text "LJ "
 tk::checkbutton .flu.ljx -variable lj
-tk::label .flu.dw -text "DW: "
+tk::label .flu.dw -text "DW "
 tk::checkbutton .flu.dwx -variable dw
-tk::label .flu.pos -text "Post: "
+tk::label .flu.pos -text "Posterous "
 tk::checkbutton .flu.ptx -variable ps
-tk::label .flu.tum -text "Tumblr: " 
+tk::label .flu.tum -text "Tumblr " 
 tk::checkbutton .flu.tmb -variable tm
-tk::label .flu.wpp -text "WP: "
+tk::label .flu.wpp -text "WP "
 tk::checkbutton .flu.wpx -variable wp
+tk::button .flu.post -text "POST" -command {postup}
 
-pack .flu.ljx -in .flu -side right
-pack .flu.lj -in .flu -side right
-pack .flu.dwx -in .flu -side right
-pack .flu.dw -in .flu -side right
-pack .flu.ptx -in .flu -side right
-pack .flu.pos -in .flu -side right
-pack .flu.tmb -in .flu -side right
-pack .flu.tum -in .flu -side right
-pack .flu.wpx -in .flu -side right
-pack .flu.wpp -in .flu -side right
-pack .flu.twx -in .flu -side right
-pack .flu.tw -in .flu -side right
-pack .flu.fbx -in .flu -side right
-pack .flu.fb -in .flu -side right
-pack .flu.stx -in .flu -side right
-pack .flu.st -in .flu -side right
-pack .flu.lbl -in .flu -side right
+pack .flu.lbl -in .flu -side left
+pack .flu.lj -in .flu -side left
+pack .flu.ljx -in .flu -side left
+pack .flu.dw -in .flu -side left
+pack .flu.dwx -in .flu -side left
+pack .flu.pos -in .flu -side left
+pack .flu.ptx -in .flu -side left
+pack .flu.tum -in .flu -side left
+pack .flu.tmb -in .flu -side left
+pack .flu.wpp -in .flu -side left
+pack .flu.wpx -in .flu -side left
+pack .flu.tw -in .flu -side left
+pack .flu.twx -in .flu -side left
+pack .flu.fb -in .flu -side left
+pack .flu.fbx -in .flu -side left
+pack .flu.st -in .flu -side left
+pack .flu.stx -in .flu -side left
+pack .flu.post -in .flu -side right
 
 pack .flu -in . -fill x
 
@@ -812,7 +819,7 @@ proc postup {} {
 set ptext [.txt.txt get 1.0 {end -1c}]
 	set auth "$::uname:$::pwrd"
 	set auth64 [::base64::encode $auth]
-	set myquery [::http::formatQuery "status" "$ptext" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
+	set myquery [::http::formatQuery "status" "$ptext" "title" $::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
 	set myauth [list "Authorization" "Basic $auth64"]
 	set token [::http::geturl $::url/api/statuses/update.xml -headers $myauth -query $myquery]
 	
