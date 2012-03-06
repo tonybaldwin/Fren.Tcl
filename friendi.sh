@@ -19,6 +19,8 @@ else
 	ud=$(cat $filedate.fpost)
 fi
 
+read -p "Please enter a title: " title
+
 # now to see if you want to crosspost elsewhere
 echo "For the following question regarding crossposting, please enter the number 1 for yes, and 0 for no."
 echo "If your friendica has the plugins, and you've configured them, you can crosspost to other blogs and sites."
@@ -40,7 +42,7 @@ read -p "Enter the domain of your Friendica site (i.e. http://friendica.somesite
 
 # and this is the curl command that sends the update to the server
 
-if [[ $(curl -u $uname:$pwrd  -d "status=$ud&ljpost_enable=$lj&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&statusnet_enable=$snet&source=friendi.sh"  $url/api/statuses/update.xml | grep error) ]]; then
+if [[ $(curl -u $uname:$pwrd  -d "status=$ud&title=$title&ljpost_enable=$lj&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&statusnet_enable=$snet&source=friendi.sh"  $url/api/statuses/update.xml | grep error) ]]; then
 
 # what does the server say?
 
