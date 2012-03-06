@@ -327,7 +327,7 @@ toplevel .about
 wm title .about "About FrenTcl"
 # tk_setPalette background $::wbg 
 
-tk::message .about.t -text "FrenTcl\n by Tony Baldwin\n tony@baldwinsoftware.com\n A friendica post composition client written in tcl/tk\n Released under the GPL\n For more info see README, or\n http://baldwinsoftware.com/wiki/pmwiki.php?n=FrenTcl.FrenTcl\n" -width 280
+tk::message .about.t -text "FrenTcl\n by Tony Baldwin\n tony@free-haven.org\n A friendica post composition client written in tcl/tk\n Released under the GPL\n For more info see README, or\n http://tonyb.us/frentcl\n" -width 280
 tk::button .about.o -text "Okay" -command {destroy .about} 
 pack .about.t -in .about -side top
 pack .about.o -in .about -side top
