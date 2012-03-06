@@ -1,8 +1,9 @@
 #! /usr/bin/env wish8.5
 
 ##############################################
-# fren.Tcl - friendika+statusnet posting client thingy 
-# (c) tony baldwin / tony@baldwinsoftware.com / http://baldwinsoftware.com
+# fren.Tcl - friendica+statusnet posting client thingy 
+# (c) tony baldwin : http://tonybaldwin.me
+# friendica profile : http://free-haven.org/profile/tony 
 # released according to the terms of the Gnu Public License, v. 3 or later
 # further licensing details at the end of the code.
 
@@ -29,6 +30,11 @@ global swrd
 global sn
 global fb
 global twit
+global tm
+global ps
+global dw
+global lj
+global wp
 
 set sn 0
 set fb 0
@@ -74,11 +80,11 @@ bind . <Control-q> {clear}
 bind . <F8> {prefs}
 bind . <F7> {browz}
 bind . <F5> {wordcount}
-bind . <Control-Return} postup
+bind . <Control-Return> {postup}
 
 tk_setPalette background #78b3d2 foreground #000000
 
-wm title . "FrenTcl - Friendika Composition Tool"
+wm title . "FrenTcl - friendica Composition Tool"
 
 ######3
 # Menus
@@ -125,13 +131,6 @@ menu .fluff.ed.t -tearoff 1
 .fluff.ed.t add command -label "Preferences" -command {prefs} -accelerator F8
 
 
-tk::label .fluff.st -text "StatusNet: "
-tk::checkbutton .fluff.stx -variable sn
-tk::label .fluff.tw -text "Twitter: "
-tk::checkbutton .fluff.twx -variable twit
-tk::label .fluff.fb -text "Facebook: "
-tk::checkbutton .fluff.fbx -variable fb
-
 tk::button .fluff.help -text "Help" -command {help}
 tk::button .fluff.abt -text "About" -command {about}
 tk::button .fluff.post -text "Post" -command {postup}
@@ -143,7 +142,7 @@ menu .fluff.ins.t -tearoff 1
 .fluff.ins.t add command -label "Link" -command {linkin}
 .fluff.ins.t add command -label "Image" -command {bimg}
 .fluff.ins.t add command -label "E-mail" -command {bmail}
-.fluff.ins.t add command -label "Friendika" -command {bfren}
+.fluff.ins.t add command -label "friendica" -command {bfren}
 .fluff.ins.t add command -label "Youtube" -command {ytube}
 .fluff.ins.t add command -label "BlockQuote" -command {bquote}
 .fluff.ins.t add command -label "CodeBlock" -command {bcode}
@@ -155,7 +154,7 @@ menu .fluff.ins.t -tearoff 1
 ####################################
 menu .fluff.view.t -tearoff 1
 
-.fluff.view.t add command -label "Friendika" -command {
+.fluff.view.t add command -label "friendica" -command {
     exec $::brow "$::url" &
     }
     
@@ -177,15 +176,52 @@ pack .fluff.size -in .fluff -side left
 pack .fluff.help -in .fluff -side right
 pack .fluff.abt -in .fluff -side right
 pack .fluff.post -in .fluff -side right
-pack .fluff.twx -in .fluff -side right
-pack .fluff.tw -in .fluff -side right
-pack .fluff.fbx -in .fluff -side right
-pack .fluff.fb -in .fluff -side right
-pack .fluff.stx -in .fluff -side right
-pack .fluff.st -in .fluff -side right
-
 
 pack .fluff -in . -fill x
+
+# xposting ...
+###############
+
+frame .flu -bd 1 -relief raised
+
+tk::label .flu.lbl -text "Xpost to "
+tk::label .flu.st -text "Status: "
+tk::checkbutton .flu.stx -variable sn
+tk::label .flu.tw -text "Tweet: "
+tk::checkbutton .flu.twx -variable twit
+tk::label .flu.fb -text "FB: "
+tk::checkbutton .flu.fbx -variable fb
+tk::label .flu.lj -text "LJ: "
+tk::checkbutton .flu.ljx -variable lj
+tk::label .flu.dw -text "DW: "
+tk::checkbutton .flu.dwx -variable dw
+tk::label .flu.pos -text "Post: "
+tk::checkbutton .flu.ptx -variable ps
+tk::label .flu.tum -text "Tumblr: " 
+tk::checkbutton .flu.tmb -variable tm
+tk::label .flu.wpp -text "WP: "
+tk::checkbutton .flu.wpx -variable wp
+
+pack .flu.ljx -in .flu -side right
+pack .flu.lj -in .flu -side right
+pack .flu.dwx -in .flu -side right
+pack .flu.dw -in .flu -side right
+pack .flu.ptx -in .flu -side right
+pack .flu.pos -in .flu -side right
+pack .flu.tmb -in .flu -side right
+pack .flu.tum -in .flu -side right
+pack .flu.wpx -in .flu -side right
+pack .flu.wpp -in .flu -side right
+pack .flu.twx -in .flu -side right
+pack .flu.tw -in .flu -side right
+pack .flu.fbx -in .flu -side right
+pack .flu.fb -in .flu -side right
+pack .flu.stx -in .flu -side right
+pack .flu.st -in .flu -side right
+pack .flu.lbl -in .flu -side right
+
+pack .flu -in . -fill x
+
 
 
 # Here is the text widget
@@ -291,7 +327,7 @@ toplevel .about
 wm title .about "About FrenTcl"
 # tk_setPalette background $::wbg 
 
-tk::message .about.t -text "FrenTcl\n by Tony Baldwin\n tony@baldwinsoftware.com\n A Friendika post composition client written in tcl/tk\n Released under the GPL\n For more info see README, or\n http://baldwinsoftware.com/wiki/pmwiki.php?n=FrenTcl.FrenTcl\n" -width 280
+tk::message .about.t -text "FrenTcl\n by Tony Baldwin\n tony@baldwinsoftware.com\n A friendica post composition client written in tcl/tk\n Released under the GPL\n For more info see README, or\n http://baldwinsoftware.com/wiki/pmwiki.php?n=FrenTcl.FrenTcl\n" -width 280
 tk::button .about.o -text "Okay" -command {destroy .about} 
 pack .about.t -in .about -side top
 pack .about.o -in .about -side top
@@ -629,7 +665,7 @@ pack .link.btns -in .link -side left
 
 
 proc bfren {} {
-.txt.txt insert insert "~friendika"
+.txt.txt insert insert "~friendica"
 }
 
 # b'bye (quit procedure)
@@ -671,7 +707,7 @@ proc yclear {} {
 	wm title . "FrenTcl"
 }
 
-# open friendika in browser
+# open friendica in browser
 ###########################################
 
 proc browz {url} {
@@ -742,7 +778,7 @@ toplevel .pref
 
 wm title .pref "FrenTcl preferences"
 
-grid [tk::label .pref.b1o -text "Friendika:"]
+grid [tk::label .pref.b1o -text "friendica:"]
 
 grid [tk::label .pref.b1n -text "Server:"]\
 [tk::entry .pref.b1nm -text url]\
@@ -769,14 +805,14 @@ grid [tk::button .pref.bro -text "Browser" -command {setbro}]\
 }
 
 ################
-# post to friendika
+# post to friendica
 
 proc postup {} {
     
 set ptext [.txt.txt get 1.0 {end -1c}]
 	set auth "$::uname:$::pwrd"
 	set auth64 [::base64::encode $auth]
-	set myquery [::http::formatQuery "status" "$ptext" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "source" "fren.tcl"]
+	set myquery [::http::formatQuery "status" "$ptext" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
 	set myauth [list "Authorization" "Basic $auth64"]
 	set token [::http::geturl $::url/api/statuses/update.xml -headers $myauth -query $myquery]
 	
@@ -810,13 +846,13 @@ toplevel .help
 wm title .help "OMFG HELP!!!"
 
 frame .help.bt
-grid [tk::button .help.bt.vt -text "RTFM" -command {browz http://baldwinsoftware.com/wiki/pmwiki.php?n=FrenTcl.FrenTcl}]\
+grid [tk::button .help.bt.vt -text "RTFM" -command {browz http://tonybaldwin.me/hax/doku.php?id=frentcl}]\
 [tk::button .help.bt.out -text "Close" -command {destroy .help}]
 
 frame .help.t
 
 text .help.t.inf -width 80 -height 10
-.help.t.inf insert end "FrenTcl, a FREE and ticklish Friendika posting client.\nThere is a manual and further info at http://baldwinsoftware.com/wiki/pmwiki.php?n=Main.FrenTcl\nClicking the RTFM button above will open the manual in your browser.\nFor additional support, join \nhttp://friendika.dsn-test.com/profile/fosshackers \n\nTony Baldwin tony@baldwinsoftware.com"
+.help.t.inf insert end "FrenTcl, a FREE and ticklish friendica posting client.\nThere is a manual and further info at http://tonyb.us/frentcl\nClicking the RTFM button above will open the manual in your browser.\n\nTony Baldwin - http://tonybaldwin.me\nhttp://free-haven.org/profile/tony"
 
 pack .help.bt -in .help -side top
 pack .help.t -in .help -side top
@@ -825,7 +861,7 @@ pack .help.t.inf -in .help.t -fill x
 }
 
 #############################################################################
-# This program was written by Anthony Baldwin / http://baldwinsoftware.com/
+# This program was written by Anthony Baldwin / http://tonybaldwin.me/
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
