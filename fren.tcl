@@ -859,6 +859,7 @@ proc dent {} {
 		set myauth [list "Authorization" "Basic $auth64"]
 		# puts "http::geturl $::serv -headers $myauth -query $myquery"
 		set token [::http::geturl $::surl/api/statuses/update.xml -headers $myauth -query $myquery]
+   	 	tk_messageBox -message "POSTED" 
 		}
 }
 
