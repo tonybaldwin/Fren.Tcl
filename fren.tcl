@@ -8,9 +8,10 @@
 # further licensing details at the end of the code.
 
 package require http
+package require tls
 package require base64
 
-uplevel #0 [list source ~/frentcl.conf]
+uplevel #0 [list source ~/.frentcl.conf]
 
 #############################
 # I've been told that there are better ways to get stuff done
@@ -36,13 +37,14 @@ global dw
 global lj
 global wp
 global subject
+global secure
 
 set subject "posted with fren.tcl"
 set sn 0
 set fb 0
 set twit 0
 
-set allvars [list brow uname pwrd url sname swrd surl novar]
+set allvars [list brow uname pwrd url sname swrd surl secure novar]
 
 set year [clock format [clock second] -format %Y]
 set mon [clock format [clock seconds] -format %m]
@@ -132,7 +134,6 @@ menu .fluff.ed.t -tearoff 1
 .fluff.ed.t add separator
 .fluff.ed.t add command -label "Preferences" -command {prefs} -accelerator F8
 
-
 tk::button .fluff.help -text "Help" -command {help}
 tk::button .fluff.abt -text "About" -command {about}
 
@@ -163,7 +164,7 @@ menu .fluff.view.t -tearoff 1
     exec $::brow "$::surl" &
 }
 
-tk::label .fluff.tit -text " Subject or Title: "
+tk::label .fluff.tit -text " Subject: "
 tk::entry .fluff.titi -textvariable subject
 
 # pack em in...
@@ -731,7 +732,7 @@ proc browz {url} {
 proc sapro {} {
 	set novar "cows"
 	set header "#!/usr/bin/env wish8.5 "
-   	set filename frentcl.conf
+   	set filename "~/.frentcl.conf"
    	set fileid [open $filename w]
    	puts $fileid $header
    	foreach var $::allvars {puts $fileid [list set $var [set ::$var]]}
@@ -794,6 +795,10 @@ grid [tk::label .pref.b1n -text "Server:"]\
 [tk::label .pref.b1p -text "password:"]\
 [tk::entry .pref.b1pw -show * -textvariable pwrd]
 
+grid [tk::label .pref.fs -text "FORCE SSL"]\
+[tk::label .pref.ms -text "(use https in url)"]\
+[tk::checkbutton .pref.tls -variable secure]
+
 grid [tk::label .pref.b2o -text "StatusNet:"]
 
 grid [tk::label .pref.b2n -text "Server:"]\
@@ -802,6 +807,7 @@ grid [tk::label .pref.b2n -text "Server:"]\
 [tk::entry .pref.b2nome -textvariable sname]\
 [tk::label .pref.b2p -text "password:"]\
 [tk::entry .pref.b2pw -show * -textvariable swrd]
+
 
 grid [tk::button .pref.bro -text "Browser" -command {setbro}]\
 [tk::entry .pref.br0z -textvariable brow]\
@@ -815,16 +821,26 @@ grid [tk::button .pref.bro -text "Browser" -command {setbro}]\
 # post to friendica
 
 proc postup {} {
-    
-set ptext [.txt.txt get 1.0 {end -1c}]
-	set auth "$::uname:$::pwrd"
-	set auth64 [::base64::encode $auth]
-	set myquery [::http::formatQuery "status" "$ptext" "title" $::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
-	set myauth [list "Authorization" "Basic $auth64"]
-	set token [::http::geturl $::url/api/statuses/update.xml -headers $myauth -query $myquery]
-	
-}
+    if { $::secure == 1 } {
 
+	set ptext [.txt.txt get 1.0 {end -1c}]
+		::http::register https 443 ::tls::socket
+		set auth "$::uname:$::pwrd"
+		set auth64 [::base64::encode $auth]
+		set myquery [::http::formatQuery "status" "$ptext" "title" "$::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
+		set myauth [list "Authorization" "Basic $auth64"]
+		set token [::http::geturl $::url/api/statuses/update.xml -headers $myauth -query $myquery]
+   	 	tk_messageBox -message "POSTED" 
+	} else {
+	set ptext [.txt.txt get 1.0 {end -1c}]
+		set auth "$::uname:$::pwrd"
+		set auth64 [::base64::encode $auth]
+		set myquery [::http::formatQuery "status" "$ptext" "title" "$::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
+		set myauth [list "Authorization" "Basic $auth64"]
+		set token [::http::geturl $::url/api/statuses/update.xml -headers $myauth -query $myquery]
+   	 	tk_messageBox -message "POSTED" 
+	}
+}
 
 # status updates to status net
 ##################################

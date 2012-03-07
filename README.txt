@@ -3,7 +3,7 @@ Fren.Tcl
 a tcl/tk Friendica posting client
 by Tony Baldwin | http://tonybaldwin.me
 
-Version 0.2
+Version 0.2.1
 
 fren.tcl will post to your friendica profile, 
 and allows cross-posting to tumblr, posterous,
@@ -23,9 +23,14 @@ programs on windows, but, I recommend running this on gnu/linux.
 
 Thanks for your support.
 
-<3 <3 <4
+<3 <3 <3
 x0x0x0x0x
 
 ./tony
 http://free-haven.org/profile/tony
 http://tonybaldwin.me
+
+QUICKNOTE:
+New version has option to force SSL for friendica posting (haven done it for statusnet, yet).
+If you check the box, MAKE SURE YOU USE https:// (not http://) in your friendica url.
+If you do NOT check the box, use http://
