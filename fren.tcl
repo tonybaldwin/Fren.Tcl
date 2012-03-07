@@ -10,7 +10,7 @@
 package require http
 package require base64
 
-uplevel #0 [list source frentcl.conf]
+uplevel #0 [list source ~/frentcl.conf]
 
 #############################
 # I've been told that there are better ways to get stuff done
