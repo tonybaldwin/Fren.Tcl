@@ -35,6 +35,7 @@ global tm
 global ps
 global dw
 global lj
+global ij
 global wp
 global subject
 global secure
@@ -199,6 +200,8 @@ tk::label .flu.fb -text "FB "
 tk::checkbutton .flu.fbx -variable fb
 tk::label .flu.lj -text "LJ "
 tk::checkbutton .flu.ljx -variable lj
+tk::label .flu.ij -text "IJ "
+tk::checkbutton .flu.ijx -variable ij
 tk::label .flu.dw -text "DW "
 tk::checkbutton .flu.dwx -variable dw
 tk::label .flu.pos -text "Posterous "
@@ -212,6 +215,8 @@ tk::button .flu.post -text "POST" -command {postup}
 pack .flu.lbl -in .flu -side left
 pack .flu.lj -in .flu -side left
 pack .flu.ljx -in .flu -side left
+pack .flu.ij -in .flu -side left
+pack .flu.ijx -in .flu -side left
 pack .flu.dw -in .flu -side left
 pack .flu.dwx -in .flu -side left
 pack .flu.pos -in .flu -side left
@@ -835,7 +840,7 @@ proc postup {} {
 	set ptext [.txt.txt get 1.0 {end -1c}]
 		set auth "$::uname:$::pwrd"
 		set auth64 [::base64::encode $auth]
-		set myquery [::http::formatQuery "status" "$ptext" "title" "$::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
+		set myquery [::http::formatQuery "status" "$ptext" "title" "$::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "ijpost_enable" "$::ij" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
 		set myauth [list "Authorization" "Basic $auth64"]
 		set token [::http::geturl $::url/api/statuses/update.xml -headers $myauth -query $myquery]
    	 	tk_messageBox -message "POSTED" 
