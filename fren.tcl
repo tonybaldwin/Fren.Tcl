@@ -832,7 +832,7 @@ proc postup {} {
 		::http::register https 443 ::tls::socket
 		set auth "$::uname:$::pwrd"
 		set auth64 [::base64::encode $auth]
-		set myquery [::http::formatQuery "status" "$ptext" "title" "$::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
+		set myquery [::http::formatQuery "status" "$ptext" "title" "$::subject" "statusnet_enable" "$::sn" "twitter_enable" "$::twit"  "facebook_enable" "$::fb" "wppost_enable" "$::wp" "ljpost_enable" "$::lj" "ijpost_enable" "$::ij" "dwpost_enable" "$::dw" "tumblr_enable" "$::tm" "posterous_enable" "$::ps" "source" "fren.tcl"]
 		set myauth [list "Authorization" "Basic $auth64"]
 		set token [::http::geturl $::url/api/statuses/update.xml -headers $myauth -query $myquery]
    	 	tk_messageBox -message "POSTED" 
