@@ -146,7 +146,7 @@ menu .fluff.ins.t -tearoff 1
 .fluff.ins.t add command -label "Image" -command {bimg}
 .fluff.ins.t add command -label "E-mail" -command {bmail}
 .fluff.ins.t add command -label "friendica" -command {bfren}
-.fluff.ins.t add command -label "Youtube" -command {ytube}
+.fluff.ins.t add command -label "Video" -command {video}
 .fluff.ins.t add command -label "BlockQuote" -command {bquote}
 .fluff.ins.t add command -label "CodeBlock" -command {bcode}
 .fluff.ins.t add command -label "Time Stamp" -command {indate}
@@ -630,8 +630,8 @@ proc bcode {} {
 .txt.txt insert insert "\[code\]INSERT CODE TEXT HERE\[/code\]"
 }
 
-proc ytube {} {
-.txt.txt insert insert "\[youtube\]INSERT VIDEO URL HERE\[/youtube\]"
+proc video{} {
+.txt.txt insert insert "\[video\]INSERT VIDEO URL HERE\[/video\]"
 }
 
 proc bquote {} {
