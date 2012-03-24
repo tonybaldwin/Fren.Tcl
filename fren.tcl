@@ -630,7 +630,7 @@ proc bcode {} {
 .txt.txt insert insert "\[code\]INSERT CODE TEXT HERE\[/code\]"
 }
 
-proc video{} {
+proc video {} {
 .txt.txt insert insert "\[video\]INSERT VIDEO URL HERE\[/video\]"
 }
 
