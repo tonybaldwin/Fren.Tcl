@@ -27,7 +27,7 @@ Thanks for your support.
 x0x0x0x0x
 
 ./tony
-http://free-haven.org/profile/tony
+https://free-haven.org/profile/tony
 http://tonybaldwin.me
 
 QUICKNOTE:
