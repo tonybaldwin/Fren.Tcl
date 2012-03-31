@@ -43,7 +43,7 @@ read -p "Enter the domain of your Friendica site (i.e. http://friendica.somesite
 
 # and this is the curl command that sends the update to the server
 
-if [[ $(curl -u -k $uname:$pwrd  -d "status=$ud&title=$title&ijpost_enable=$ij&ljpost_enable=$lj&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&statusnet_enable=$snet&source=friendi.sh"  $url/api/statuses/update.xml | grep error) ]]; then
+if [[ $(curl -k -u $uname:$pwrd  -d "status=$ud&title=$title&ijpost_enable=$ij&ljpost_enable=$lj&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&statusnet_enable=$snet&source=friendi.sh"  $url/api/statuses/update.xml | grep error) ]]; then
 
 # what does the server say?
 
