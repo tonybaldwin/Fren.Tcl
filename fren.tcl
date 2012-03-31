@@ -3,7 +3,7 @@
 ##############################################
 # fren.Tcl - friendica+statusnet posting client thingy 
 # (c) tony baldwin : http://tonybaldwin.me
-# friendica profile : http://free-haven.org/profile/tony 
+# friendica profile : https://free-haven.org/profile/tony 
 # released according to the terms of the Gnu Public License, v. 3 or later
 # further licensing details at the end of the code.
 
