@@ -31,6 +31,7 @@ read -p "twitter? " twit
 read -p "facebook? " fb
 read -p "dreamwidth?  " dw
 read -p "livejournal? " lj
+read -p "insanejournal?" ij
 read -p "tumblr? " tum
 read -p "posterous? " pos
 read -p "wordpress? " wp 
@@ -42,7 +43,7 @@ read -p "Enter the domain of your Friendica site (i.e. http://friendica.somesite
 
 # and this is the curl command that sends the update to the server
 
-if [[ $(curl -u -k $uname:$pwrd  -d "status=$ud&title=$title&ljpost_enable=$lj&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&statusnet_enable=$snet&source=friendi.sh"  $url/api/statuses/update.xml | grep error) ]]; then
+if [[ $(curl -u -k $uname:$pwrd  -d "status=$ud&title=$title&ijpost_enable=$ij&ljpost_enable=$lj&posterous_enable=$pos&dwpost_enable=$dw&wppost_enable=$wp&tumblr_enable=$tum&facebook_enable=$fb&twitter_enable=$twit&statusnet_enable=$snet&source=friendi.sh"  $url/api/statuses/update.xml | grep error) ]]; then
 
 # what does the server say?
 
