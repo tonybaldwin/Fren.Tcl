@@ -98,6 +98,8 @@ wm title . "FrenTcl - friendica Composition Tool"
 # menu bar buttons
 frame .fluff -bd 1 -relief raised
 
+tk::label .fluff.ftcl -foreground yellow -text "Fren.Tcl "
+
 tk::menubutton .fluff.mb -text File -menu .fluff.mb.f 
 tk::menubutton .fluff.ed -text Edit -menu .fluff.ed.t 
 tk::menubutton .fluff.ins -text Insert -menu .fluff.ins.t 
@@ -183,6 +185,7 @@ pack .fluff.titi -in .fluff -side left
 
 pack .fluff.help -in .fluff -side right
 pack .fluff.abt -in .fluff -side right
+pack .fluff.ftcl -in .fluff -side right
 
 pack .fluff -in . -fill x
 
