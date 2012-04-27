@@ -12,7 +12,7 @@ if [ != "$HOME/bin/" ]; then
 	mkdir $HOME/bin/
 	$PATH=$PATH:/$HOME/bin/
 	export PATH
-else
+fi
 
 echo "Installing frentcl..."
 
@@ -30,5 +30,4 @@ echo "To run fren.tcl, in terminal type fren.tcl, or make an icon/menu item/shor
 echo "Don't forget to edit preferences before trying to post for the first time! "
 echo "Enjoy!"
 
-fi
 exit
