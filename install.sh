@@ -18,8 +18,7 @@ echo "Installing frentcl..."
 
 echo "Creating config files..."
 
-mkdir $HOME/.frentcl
-cp frentcl.conf $HOME/.frentcl/
+cp frentcl.conf $HOME/.frentcl.conf
 
 echo "Moving files, setting permissions..."
 
